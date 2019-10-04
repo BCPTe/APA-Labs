@@ -49,9 +49,9 @@ void print_subv(int vect[N]){
     for(i=0 ; i<N ; i++){
         for(j=i ; vect[j]!=0 && j<N ; j++);
         if(j-i==max){
-            printf("{");
+            printf("{ ");
             for( ; i<j ; i++)
-                printf("%d", vect[i]);
+                printf("%d ", vect[i]);
             printf("} ");
         }
     }
