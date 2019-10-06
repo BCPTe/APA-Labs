@@ -28,7 +28,7 @@ int main(void){
 void readv(int vect[N]){
 	int i;
 
-    fprintf(stdout, "Inserisci gli elementi del vettore separati da spazio: ");
+    fprintf(stdout, "Enter the elements of the vector detached by space: ");
 	for(i=0 ; i<N ; i++)
 		scanf("%d", &vect[i]);
 }
