@@ -44,7 +44,7 @@ int main(void){
             /* cause in c 'A' != 'a' */
         totsubs+=count(line, length);
     }
-    printf("Number of substrings: %d", totsubs);
+    printf("Number of substrings: %d\n", totsubs);
 
     return EXIT_SUCCESS;
 }
