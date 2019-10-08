@@ -52,7 +52,7 @@ int main(){
         }
     }while(P!=0);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 void rotation(int vect[maxN], int N, int P, int dir){
