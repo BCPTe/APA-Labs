@@ -45,7 +45,8 @@ int main(void){
         totsubs+=count(line, length);
     }
     printf("Number of substrings: %d\n", totsubs);
-
+    fclose(fp);
+    
     return EXIT_SUCCESS;
 }
 
