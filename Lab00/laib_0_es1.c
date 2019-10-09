@@ -56,4 +56,3 @@ void print_subv(int vect[N]){
         }
     }
 }
-change description
