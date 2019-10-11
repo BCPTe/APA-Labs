@@ -31,7 +31,7 @@ int main(){
         exit(99);
     }
 
-    /* ask user to enter dest filename */
+    /* ask user to enter thesaurus filename */
     printf("Enter thesaurus filename: ");
     scanf("%s", t_filename);
     thesaurus=fopen(t_filename, "r");
@@ -57,6 +57,7 @@ void encode(FILE *source, FILE *thesaurus){
         char word[MAX+11];
     }word_encode[30];
 
+    /* ask user to enter thesaurus filename */
     printf("Enter destination filename: ");
     scanf("%s", d_filename);
 
