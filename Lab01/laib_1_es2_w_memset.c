@@ -4,7 +4,7 @@ Name        : laib_1_es2_w_memset.c
 Author      : BCPTe
 Version     : 1.0
 Copyright   : ++NONE++
-Description : Laib_1 Exercise 2 - APA 19/20 PoliTO
+Description : Laib_1 Exercise 2 w/ memset - APA 19/20 PoliTO
 =============================================================
 */
 
