@@ -1,10 +1,10 @@
 /*
 =============================================================
-Name        : laib_X_esX.c
+Name        : laib_1_es2.c
 Author      : BCPTe
 Version     : 1.0
 Copyright   : ++NONE++
-Description : Laib_X Exercise X - APA 19/20 PoliTO
+Description : Laib_1 Exercise 2 - APA 19/20 PoliTO
 =============================================================
 */
 
