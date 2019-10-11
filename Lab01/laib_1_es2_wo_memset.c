@@ -1,10 +1,10 @@
 /*
 =============================================================
-Name        : laib_X_esX.c
+Name        : laib_1_es2_wo_memset.c
 Author      : BCPTe
 Version     : 1.0
 Copyright   : ++NONE++
-Description : Laib_X Exercise X - APA 19/20 PoliTO
+Description : Laib_1 Exercise 2 w/o memset - APA 19/20 PoliTO
 =============================================================
 */
 
@@ -31,7 +31,7 @@ int main(){
         exit(99);
     }
 
-    /* ask user to enter dest filename */
+    /* ask user to enter thesaurus filename */
     printf("Enter thesaurus filename: ");
     scanf("%s", t_filename);
     thesaurus=fopen(t_filename, "r");
@@ -56,7 +56,8 @@ void encode(FILE *source, FILE *thesaurus){
         char code[MAX+11];
         char word[MAX+11];
     }word_encode[30];
-
+    
+    /* ask user to enter dest filename */
     printf("Enter destination filename: ");
     scanf("%s", d_filename);
 
