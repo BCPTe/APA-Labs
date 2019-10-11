@@ -50,7 +50,7 @@ void encode(FILE *source, FILE *thesaurus){
     int i, j, found, s_max;
     char *ptr;
     char delimiter;
-    char s_line[201], d_filename[MAX+1], modified[31]={0};
+    char s_line[201], d_filename[MAX+1], modified[MAX+11]={0};
     FILE *dest;
     struct{
         char code[MAX+11];
@@ -79,7 +79,7 @@ void encode(FILE *source, FILE *thesaurus){
                 strcpy(s_line, modified);
             }
         }
-        for(j=0 ; j<31 ; j++)
+        for(j=0 ; j<MAX+11 ; j++)
             modified[j]='\0';
         fputs(s_line, dest);
         fputc(delimiter, dest);
