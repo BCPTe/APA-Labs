@@ -57,7 +57,7 @@ void encode(FILE *source, FILE *thesaurus){
         char word[MAX+11];
     }word_encode[30];
 
-    /* ask user to enter thesaurus filename */
+    /* ask user to enter dest filename */
     printf("Enter destination filename: ");
     scanf("%s", d_filename);
 
