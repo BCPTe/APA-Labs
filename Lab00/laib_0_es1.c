@@ -28,7 +28,7 @@ int main(void){
 void readv(int vect[N]){
 	int i;
 
-    fprintf(stdout, "Enter the elements of the vector detached by space: ");
+    fprintf(stdout, "Enter the elements (%d) of the vector detached by space: ", N);
 	for(i=0 ; i<N ; i++)
 		scanf("%d", &vect[i]);
 }
@@ -46,13 +46,17 @@ void print_subv(int vect[N]){
             cnt=0;
     }
 
-    for(i=0 ; i<N ; i++){
-        for(j=i ; vect[j]!=0 && j<N ; j++);
-        if(j-i==max){
-            printf("{ ");
-            for( ; i<j ; i++)
-                printf("%d ", vect[i]);
-            printf("} ");
+    if(max>0){
+        for(i=0 ; i<N ; i++){
+            for(j=i ; vect[j]!=0 && j<N ; j++);
+            if(j-i==max){
+                printf("{ ");
+                for( ; i<j ; i++)
+                    printf("%d ", vect[i]);
+                printf("} ");
+            }
         }
     }
+    else
+        printf("\nNo sequence found!\n");
 }
