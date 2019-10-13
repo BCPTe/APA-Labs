@@ -35,9 +35,15 @@ int main(){
     }
     else{
         fscanf(fp, "%d\n%d", &nr, &nc);
-        for(i=0 ; i<nr ; i++)
-            for(j=0 ; j<nc ; j++)
+        printf("\nFile matrix:\n");
+        for(i=0 ; i<nr ; i++){
+            for(j=0 ; j<nc ; j++){
                 fscanf(fp, "%d", &matrix[i][j]);
+                printf("%3d ", matrix[i][j]);
+            }
+            printf("\n");
+        }
+        printf("\n");
     }
 
     do{
@@ -108,7 +114,7 @@ void rotation(int matrix[MAX+10][MAX+10], int nr, int nc, char selector[41], int
     }
 
     /* print shifted matrix */
-    printf("Shifted matrix:\n\n");
+    printf("\nShifted matrix:\n");
     for(i=0 ; i<nr ; i++){
         for(j=0 ; j<nc ; j++)
             printf("%3d ", matrix[i][j]);
