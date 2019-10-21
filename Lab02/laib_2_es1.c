@@ -49,6 +49,8 @@ int main(){
     }
 
     verify(fp, matrix, nr, nc);
+    
+    fclose(fp);
 
     return EXIT_SUCCESS;
 }
