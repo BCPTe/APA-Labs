@@ -133,11 +133,11 @@ void date(char *line_tot, FILE *log, int flag){
 void partenza(char *line_tot, FILE *log){
     char line[MAXFILE+1], s_depart[MAX+1], depart[MAX+1];
 
+    sscanf(line_tot, "%s", s_depart);
     while(fgets(line, MAXFILE, log)!=NULL){
         /* delete newline */
         line[strlen(line)-1]='\0';
         sscanf(line, "%*s %s", depart);
-        sscanf(line_tot, "%s", s_depart);
         if(strcmp(s_depart, depart)==0)
             puts(line);
     }
@@ -146,11 +146,11 @@ void partenza(char *line_tot, FILE *log){
 void capolinea(char *line_tot, FILE *log){
     char line[MAXFILE+1], s_arr[MAX+1], arr[MAX+1];
 
+    sscanf(line_tot, "%s", s_arr);
     while(fgets(line, MAXFILE, log)!=NULL){
         /* delete newline */
         line[strlen(line)-1]='\0';
-        sscanf(line, "%*s %*s %s", s_arr);
-        sscanf(line_tot, "%s", arr);
+        sscanf(line, "%*s %*s %s", arr);
         if(strcmp(s_arr, arr)==0)
             puts(line);
     }
@@ -160,9 +160,9 @@ void ritardo_tot(char *line_tot, FILE *log){
     char line[MAXFILE+1], s_code[MAX+1], code[MAX+1];
     int cnt=0, delay, delay_tot=0;
 
+    sscanf(line_tot, "%s", s_code);
     while(fgets(line, MAXFILE, log)!=NULL){
         sscanf(line, "%s %*s %*s %*d/%*d/%*d %*d:%*d:%*d %*d:%*d:%*d %d", code, &delay);
-        sscanf(line_tot, "%s", s_code);
         if(strcmp(s_code, code)==0){
             cnt++;
             delay_tot+=delay;
