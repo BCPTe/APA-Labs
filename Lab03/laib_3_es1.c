@@ -22,7 +22,7 @@ typedef struct{
 }submatrix;
 
 void leggiMatrice(FILE *fp, int matrix[MAX_M][MAX_M], int *nr, int *nc);
-int verify(FILE *fp, int matrix[MAX_M][MAX_M], submatrix *ver, int r, int c, int *nr, int *nc);
+int riconosciRegione(FILE *fp, int matrix[MAX_M][MAX_M], submatrix *ver, int r, int c, int *nr, int *nc);
 
 int main(){
     int i, j, r, c, nr=0, nc=0;
@@ -52,7 +52,7 @@ int main(){
     /* enter coordinates to be checked */
     printf("Enter coordinates (care: <1,1> --> <0,0>): ");
     scanf("%d %d", &r, &c);
-    if(verify(fp, matrix, &ver, r, c, &nr, &nc))
+    if(riconosciRegione(fp, matrix, &ver, r, c, &nr, &nc))
         printf("\nupper left extreme <%d,%d>, length=%d, height=%d\n", r, c, ver.dims[0], ver.dims[1]);
     else
         printf("\n<%d,%d> is not an upper left extreme!\n", r, c);
@@ -79,7 +79,7 @@ void leggiMatrice(FILE *fp, int matrix[MAX_M][MAX_M], int *nr, int *nc){
     *nr=i+1;
 }
 
-int verify(FILE *fp, int matrix[MAX_M][MAX_M], submatrix *ver, int r, int c, int *nr, int *nc){
+int riconosciRegione(FILE *fp, int matrix[MAX_M][MAX_M], submatrix *ver, int r, int c, int *nr, int *nc){
     int i, j;
 
     if(matrix[r][c]){
@@ -98,3 +98,4 @@ int verify(FILE *fp, int matrix[MAX_M][MAX_M], submatrix *ver, int r, int c, int
 
     return FALSE;
 }
+
