@@ -66,7 +66,7 @@ void leggiMatrice(FILE *fp, int matrix[MAX_M][MAX_M], int *nr, int *nc){
     int i=0, j=0;
     char charline;
 
-    /* WARNING: last line of the file must not contain '\n' // if u have '\n' then change line 80 to --> *nr=i <-- */
+    /* WARNING: last line of the file must not contain '\n' // if u have '\n' then change line 79 to --> *nr=i <-- */
     while(fscanf(fp, "%d", &matrix[i][j])!=EOF){
         fscanf(fp, "%c", &charline);
         j++;
