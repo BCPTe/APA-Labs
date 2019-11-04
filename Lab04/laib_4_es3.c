@@ -42,7 +42,7 @@ char *cercaRegexp(char *src, char *regexp){
                 strncpy(line, regexp, i);
             line[i]=src[i];
             strcat(line, regexp+i+1);
-               ptr=strstr(src, line);
+            ptr=strstr(src, line);
             if(ptr!=NULL) return ptr;
         }
         else if(regexp[i]=='['){
