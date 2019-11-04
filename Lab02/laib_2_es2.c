@@ -24,7 +24,7 @@ typedef enum{
 }comando_e;
 
 void STL(char *string);
-comando_e leggiComando();
+comando_e leggiComando(char *line_tot);
 void selezionaDati(comando_e cmd, char *line_tot, FILE *log);
 void date(char *line_tot, FILE *log, int flag);
 void partenza(char *line_tot, FILE *log);
