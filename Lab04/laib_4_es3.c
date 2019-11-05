@@ -32,48 +32,50 @@ int main(){
 }
 
 char *cercaRegexp(char *src, char *regexp){
-    int i=0, j=0, pos=0;
-    char *ptr;
+    int i=0, j=0, k=0, found=0, flag=0;
+    char *ptr=NULL;
     char line[MAX+1]={0};
 
-    while(regexp[i]!='\0'){
-        if(regexp[i]=='.'){
-            if(i>0)
-                strncpy(line, regexp, i);
+    for(i=0 ; i<strlen(regexp) ; i++)
+        line[i]=regexp[i];
+    i=0;
+
+    while(line[i]!='\0'){
+        flag=0;
+        if(line[i]=='.'){
             line[i]=src[i];
-            strcat(line, regexp+i+1);
-            ptr=strstr(src, line);
-            if(ptr!=NULL) return ptr;
+            if(strncmp(src, line, i+1)==0) found=1;
         }
-        else if(regexp[i]=='['){
+        else if(line[i]=='['){
             j=i+1;
-            if(i>0)
-                strncpy(line, regexp, i);
-            while(regexp[j]!=']'){
-                line[i]=regexp[j];
-                while(regexp[pos++]!=']');
-                strcpy(line+i+1, regexp+pos);
-                ptr=strstr(src, line);
-                if(ptr!=NULL) return ptr;
+            while(line[j]!=']'){
+                if(!flag)
+                    line[i]=line[j];
+                if(strncmp(src, line, i+1)==0) flag=1;
                 j++;
-                pos=0;
+            }
+            if(flag){
+                for(k=i+1 ; k<strlen(line) ; k++)
+                    line[k]=line[++j];
             }
             i++;
         }
-        else if(regexp[i]=='\\'){
-            if(i>0)
-                strncpy(line, regexp, i);
+        else if(line[i]=='\\'){
             line[i]=src[i];
-            if(regexp[i+1]=='a')
+            if(line[i+1]=='a')
                 line[i]=tolower(line[i]);
-            else if(regexp[i+1]=='A')
+            else if(line[i+1]=='A')
                 line[i]=toupper(line[i]);
-            strcat(line, regexp+i+2);
-            ptr=strstr(src, line);
-            if(ptr!=NULL) return ptr;
+            for(j=i+1 ; j<strlen(line) ; j++)
+                line[j]=line[j+1];
+            if(strncmp(src, line, i+1)==0) found=1;
         }
         i++;
     }
 
+    if(found){
+        ptr=strstr(src, line);
+    }
+    if(ptr!=NULL) return src;
     return no_occ;
 }
