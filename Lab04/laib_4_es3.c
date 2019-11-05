@@ -43,18 +43,19 @@ char *cercaRegexp(char *src, char *regexp){
     while(line[i]!='\0'){
         flag=0;
         if(line[i]=='.'){
-            line[i]=src[i];
+            line[i]=src[i];                             /* replace '.' with corresponding letter in src */
             if(strncmp(src, line, i+1)==0) found=1;
         }
         else if(line[i]=='['){
             j=i+1;
             while(line[j]!=']'){
                 if(!flag)
-                    line[i]=line[j];
+                    line[i]=line[j];                    /* replace line[i] with letters in brackets */
                 if(strncmp(src, line, i+1)==0) flag=1;
                 j++;
             }
             if(flag){
+                /* add remaining part of line */
                 for(k=i+1 ; k<strlen(line) ; k++)
                     line[k]=line[++j];
             }
@@ -67,15 +68,16 @@ char *cercaRegexp(char *src, char *regexp){
             else if(line[i+1]=='A')
                 line[i]=toupper(line[i]);
             for(j=i+1 ; j<strlen(line) ; j++)
-                line[j]=line[j+1];
+                line[j]=line[j+1];                      /* shift line by 1 */
             if(strncmp(src, line, i+1)==0) found=1;
         }
         i++;
     }
 
     if(found){
-        ptr=strstr(src, line);
+        ptr=strstr(src, line);              /* check if line matches src */
     }
     if(ptr!=NULL) return src;
     return no_occ;
 }
+
