@@ -87,7 +87,7 @@ int fill_log(FILE *log, info_log ptr_log[MAXENTRIES]){
     printf("\nContents of the log file:\n");
     printf("-------------------------\n");
     for(j=0 ; j<i ; j++)
-            printf("%s %s %s %d/%d/%d %d:%d:%d %d:%d:%d %d\n", ptr_log[j].code, ptr_log[j].departure, ptr_log[j].arrival,
+            printf("%s | %s -> %s\t| %d/%d/%d\t%d:%d:%d - %d:%d:%d\t%d\n", ptr_log[j].code, ptr_log[j].departure, ptr_log[j].arrival,
                ptr_log[j].date[0], ptr_log[j].date[1], ptr_log[j].date[2], ptr_log[j].hour_dep[0], ptr_log[j].hour_dep[1], ptr_log[j].hour_dep[2],
                ptr_log[j].hour_arr[0], ptr_log[j].hour_arr[1], ptr_log[j].hour_arr[2], ptr_log[j].delay);
     printf("-------------------------\n");
@@ -157,7 +157,7 @@ void search(comando_e lastcmd, info_log ptr_log[MAXENTRIES], int total_entries){
             m=(l+r)/2;
             if(strcmp(ptr_log[m].departure, searched)==0){
                 found++;
-                printf("%s %s %s %d/%d/%d %d:%d:%d %d:%d:%d %d\n", ptr_log[m].code, ptr_log[m].departure, ptr_log[m].arrival,
+                printf("%s | %s -> %s\t| %d/%d/%d\t%d:%d:%d - %d:%d:%d\t%d\n", ptr_log[m].code, ptr_log[m].departure, ptr_log[m].arrival,
                     ptr_log[m].date[0], ptr_log[m].date[1], ptr_log[m].date[2], ptr_log[m].hour_dep[0], ptr_log[m].hour_dep[1], ptr_log[m].hour_dep[2],
                     ptr_log[m].hour_arr[0], ptr_log[m].hour_arr[1], ptr_log[m].hour_arr[2], ptr_log[m].delay);
             }
@@ -171,7 +171,7 @@ void search(comando_e lastcmd, info_log ptr_log[MAXENTRIES], int total_entries){
         for(i=0 ; i<total_entries ; i++){
             if(strstr(ptr_log[i].departure, searched)!=NULL){
                 found++;
-                printf("%s %s %s %d/%d/%d %d:%d:%d %d:%d:%d %d\n", ptr_log[i].code, ptr_log[i].departure, ptr_log[i].arrival,
+                printf("%s | %s -> %s\t| %d/%d/%d\t%d:%d:%d - %d:%d:%d\t%d\n", ptr_log[i].code, ptr_log[i].departure, ptr_log[i].arrival,
                     ptr_log[i].date[0], ptr_log[i].date[1], ptr_log[i].date[2], ptr_log[i].hour_dep[0], ptr_log[i].hour_dep[1], ptr_log[i].hour_dep[2],
                     ptr_log[i].hour_arr[0], ptr_log[i].hour_arr[1], ptr_log[i].hour_arr[2], ptr_log[i].delay);
             }
@@ -225,7 +225,7 @@ void printfunct(info_log ptr_log[MAXENTRIES], int total_entries){
 
     if(strcmp(command, "stdout")==0){           /* print on stdout */
         for(i=0 ; i<total_entries ; i++)
-            printf("%s %s %s %d/%d/%d %d:%d:%d %d:%d:%d %d\n", ptr_log[i].code, ptr_log[i].departure, ptr_log[i].arrival,
+            printf("%s | %s -> %s\t| %d/%d/%d\t%d:%d:%d - %d:%d:%d\t%d\n", ptr_log[i].code, ptr_log[i].departure, ptr_log[i].arrival,
                ptr_log[i].date[0], ptr_log[i].date[1], ptr_log[i].date[2], ptr_log[i].hour_dep[0], ptr_log[i].hour_dep[1], ptr_log[i].hour_dep[2],
                ptr_log[i].hour_arr[0], ptr_log[i].hour_arr[1], ptr_log[i].hour_arr[2], ptr_log[i].delay);
     }
@@ -242,3 +242,4 @@ void printfunct(info_log ptr_log[MAXENTRIES], int total_entries){
     printf("\nPrint done!\n");
     printf("-------------------------\n");
 }
+
