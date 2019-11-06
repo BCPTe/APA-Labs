@@ -34,19 +34,19 @@ typedef struct{
 }info_log;
 
 void STL(char *string);
-int fill_log(FILE *log, info_log ptr_log[MAXENTRIES]);
+int fill_log(FILE *log, info_log total_log[MAXENTRIES]);
 comando_e leggiComando(comando_e *lastcmd);
-void selezionaDati(comando_e pick, comando_e lastcmd, info_log ptr_log[MAXENTRIES], int total_entries);
-void order(info_log ptr_log[MAXENTRIES], int total_entries, int ord_type);
-void search(comando_e pick, info_log ptr_log[MAXENTRIES], int total_entries);
-void printfunct(info_log ptr_log[MAXENTRIES], int total_entries);
+void selezionaDati(comando_e pick, comando_e lastcmd, info_log total_log[MAXENTRIES], int total_entries);
+void order(info_log total_log[MAXENTRIES], int total_entries, int ord_type);
+void search(comando_e pick, info_log total_log[MAXENTRIES], int total_entries);
+void printfunct(info_log total_log[MAXENTRIES], int total_entries);
 
 int main(){
     int total_entries=0;
     char filename[MAX+1];
     comando_e pick, lastcmd=r_search;
     FILE *log;
-    info_log ptr_log[MAXENTRIES];
+    info_log total_log[MAXENTRIES];
 
     printf("Enter filename: ");
     scanf("%s", filename);
@@ -58,11 +58,11 @@ int main(){
         exit(99);
     }
 
-    total_entries=fill_log(log, ptr_log);
+    total_entries=fill_log(log, total_log);
     do{
         printf("\n");
         pick=leggiComando(&lastcmd);
-        selezionaDati(pick, lastcmd, ptr_log, total_entries);
+        selezionaDati(pick, lastcmd, total_log, total_entries);
     }while(pick!=r_fine);
 
     fclose(log);
@@ -70,26 +70,26 @@ int main(){
     return EXIT_SUCCESS;
 }
 
-int fill_log(FILE *log, info_log ptr_log[MAXENTRIES]){
+int fill_log(FILE *log, info_log total_log[MAXENTRIES]){
     int i=0, j;
     char line[MAXFILE+1];
 
     while(fgets(line, MAXFILE, log)!=NULL){
         /* delete newline */
         line[strlen(line)-1]='\0';
-        sscanf(line, "%s %s %s %d/%d/%d %d:%d:%d %d:%d:%d %d", ptr_log[i].code, ptr_log[i].departure, ptr_log[i].arrival,
-               &ptr_log[i].date[0], &ptr_log[i].date[1], &ptr_log[i].date[2], &ptr_log[i].hour_dep[0], &ptr_log[i].hour_dep[1], &ptr_log[i].hour_dep[2],
-               &ptr_log[i].hour_arr[0], &ptr_log[i].hour_arr[1], &ptr_log[i].hour_arr[2], &ptr_log[i].delay);
-        ptr_log[i].datetoint=ptr_log[i].date[0]+ptr_log[i].date[1]*31+ptr_log[i].date[2]*365;
+        sscanf(line, "%s %s %s %d/%d/%d %d:%d:%d %d:%d:%d %d", total_log[i].code, total_log[i].departure, total_log[i].arrival,
+               &total_log[i].date[0], &total_log[i].date[1], &total_log[i].date[2], &total_log[i].hour_dep[0], &total_log[i].hour_dep[1], &total_log[i].hour_dep[2],
+               &total_log[i].hour_arr[0], &total_log[i].hour_arr[1], &total_log[i].hour_arr[2], &total_log[i].delay);
+        total_log[i].datetoint=total_log[i].date[0]+total_log[i].date[1]*31+total_log[i].date[2]*365;
         i++;
     }
 
     printf("\nContents of the log file:\n");
     printf("-------------------------\n");
     for(j=0 ; j<i ; j++)
-            printf("%s | %s -> %s\t| %d/%d/%d\t%d:%d:%d - %d:%d:%d\t%d\n", ptr_log[j].code, ptr_log[j].departure, ptr_log[j].arrival,
-               ptr_log[j].date[0], ptr_log[j].date[1], ptr_log[j].date[2], ptr_log[j].hour_dep[0], ptr_log[j].hour_dep[1], ptr_log[j].hour_dep[2],
-               ptr_log[j].hour_arr[0], ptr_log[j].hour_arr[1], ptr_log[j].hour_arr[2], ptr_log[j].delay);
+            printf("%s | %s -> %s\t| %d/%d/%d\t%d:%d:%d - %d:%d:%d\t%d\n", total_log[j].code, total_log[j].departure, total_log[j].arrival,
+               total_log[j].date[0], total_log[j].date[1], total_log[j].date[2], total_log[j].hour_dep[0], total_log[j].hour_dep[1], total_log[j].hour_dep[2],
+               total_log[j].hour_arr[0], total_log[j].hour_arr[1], total_log[j].hour_arr[2], total_log[j].delay);
     printf("-------------------------\n");
 
     return i;
@@ -118,20 +118,20 @@ comando_e leggiComando(comando_e *lastcmd){
     return cmd;
 }
 
-void selezionaDati(comando_e pick, comando_e lastcmd, info_log ptr_log[MAXENTRIES], int total_entries){
+void selezionaDati(comando_e pick, comando_e lastcmd, info_log total_log[MAXENTRIES], int total_entries){
     int ord_type;
     switch(pick){
-        case r_search:   search(lastcmd, ptr_log, total_entries);
+        case r_search:   search(lastcmd, total_log, total_entries);
             break;
-        case r_code:   ord_type=1; order(ptr_log, total_entries, ord_type); printf("Sort by code done!\n");
+        case r_code:   ord_type=1; order(total_log, total_entries, ord_type); printf("Sort by code done!\n");
             break;
-        case r_date:   ord_type=2; order(ptr_log, total_entries, ord_type); printf("Sort by date done!\n");
+        case r_date:   ord_type=2; order(total_log, total_entries, ord_type); printf("Sort by date done!\n");
             break;
-        case r_partenza:   ord_type=3; order(ptr_log, total_entries, ord_type); printf("Sort by departure done!\n");
+        case r_partenza:   ord_type=3; order(total_log, total_entries, ord_type); printf("Sort by departure done!\n");
             break;
-        case r_capolinea:   ord_type=4; order(ptr_log, total_entries, ord_type); printf("Sort by arrival done!\n");
+        case r_capolinea:   ord_type=4; order(total_log, total_entries, ord_type); printf("Sort by arrival done!\n");
             break;
-        case r_stampa:   printfunct(ptr_log, total_entries);
+        case r_stampa:   printfunct(total_log, total_entries);
             break;
         case r_fine:
             printf("\nChiusura del programma in corso...\n");
@@ -143,7 +143,7 @@ void selezionaDati(comando_e pick, comando_e lastcmd, info_log ptr_log[MAXENTRIE
     }
 }
 
-void search(comando_e lastcmd, info_log ptr_log[MAXENTRIES], int total_entries){
+void search(comando_e lastcmd, info_log total_log[MAXENTRIES], int total_entries){
     int i, l=0, r=total_entries-1, m, found=0;
     char searched[MAX+1];
 
@@ -155,13 +155,13 @@ void search(comando_e lastcmd, info_log ptr_log[MAXENTRIES], int total_entries){
     if(lastcmd==r_partenza){            /* binary search */
         while(l<=r){
             m=(l+r)/2;
-            if(strcmp(ptr_log[m].departure, searched)==0){
+            if(strcmp(total_log[m].departure, searched)==0){
                 found++;
-                printf("%s | %s -> %s\t| %d/%d/%d\t%d:%d:%d - %d:%d:%d\t%d\n", ptr_log[m].code, ptr_log[m].departure, ptr_log[m].arrival,
-                    ptr_log[m].date[0], ptr_log[m].date[1], ptr_log[m].date[2], ptr_log[m].hour_dep[0], ptr_log[m].hour_dep[1], ptr_log[m].hour_dep[2],
-                    ptr_log[m].hour_arr[0], ptr_log[m].hour_arr[1], ptr_log[m].hour_arr[2], ptr_log[m].delay);
+                printf("%s | %s -> %s\t| %d/%d/%d\t%d:%d:%d - %d:%d:%d\t%d\n", total_log[m].code, total_log[m].departure, total_log[m].arrival,
+                    total_log[m].date[0], total_log[m].date[1], total_log[m].date[2], total_log[m].hour_dep[0], total_log[m].hour_dep[1], total_log[m].hour_dep[2],
+                    total_log[m].hour_arr[0], total_log[m].hour_arr[1], total_log[m].hour_arr[2], total_log[m].delay);
             }
-            if(strcmp(ptr_log[m].departure, searched)<0)
+            if(strcmp(total_log[m].departure, searched)<0)
                 l=m+1;
             else
                 r=m-1;
@@ -169,11 +169,11 @@ void search(comando_e lastcmd, info_log ptr_log[MAXENTRIES], int total_entries){
     }
     else{           /* linear search */
         for(i=0 ; i<total_entries ; i++){
-            if(strstr(ptr_log[i].departure, searched)!=NULL){
+            if(strstr(total_log[i].departure, searched)!=NULL){
                 found++;
-                printf("%s | %s -> %s\t| %d/%d/%d\t%d:%d:%d - %d:%d:%d\t%d\n", ptr_log[i].code, ptr_log[i].departure, ptr_log[i].arrival,
-                    ptr_log[i].date[0], ptr_log[i].date[1], ptr_log[i].date[2], ptr_log[i].hour_dep[0], ptr_log[i].hour_dep[1], ptr_log[i].hour_dep[2],
-                    ptr_log[i].hour_arr[0], ptr_log[i].hour_arr[1], ptr_log[i].hour_arr[2], ptr_log[i].delay);
+                printf("%s | %s -> %s\t| %d/%d/%d\t%d:%d:%d - %d:%d:%d\t%d\n", total_log[i].code, total_log[i].departure, total_log[i].arrival,
+                    total_log[i].date[0], total_log[i].date[1], total_log[i].date[2], total_log[i].hour_dep[0], total_log[i].hour_dep[1], total_log[i].hour_dep[2],
+                    total_log[i].hour_arr[0], total_log[i].hour_arr[1], total_log[i].hour_arr[2], total_log[i].delay);
             }
         }
     }
@@ -183,37 +183,52 @@ void search(comando_e lastcmd, info_log ptr_log[MAXENTRIES], int total_entries){
     printf("-------------------------\n");
 }
 
-void order(info_log ptr_log[MAXENTRIES], int total_entries, int ord_type){
-    int i, j, min;
+void order(info_log total_log[MAXENTRIES], int total_entries, int ord_type){
+    int i, j, r=total_entries-1, flag=1;
     info_log tmp;
 
-    for(i=0 ; i<total_entries ; i++){
-        min=i;
-        for(j=i+1 ; j<total_entries ; j++){
+    for(i=0 ; i<r && flag==1 ; i++){
+        flag=0;
+        for(j=0 ; j<r-i ; j++){
             switch(ord_type){
             case 1:         /* sort by code */
-                if(strcmp(ptr_log[j].code, ptr_log[min].code)<0) min=j;
+                if(strcmp(total_log[j].code, total_log[j+1].code)>0){
+                    flag=1;
+                    tmp=total_log[j];
+                    total_log[j]=total_log[j+1];
+                    total_log[j+1]=tmp;
+                }
                 break;
             case 2:         /* sort by date */
-                if(ptr_log[j].datetoint<ptr_log[min].datetoint) min=j;
+                if(total_log[j].datetoint>total_log[j+1].datetoint){
+                    flag=1;
+                    tmp=total_log[j];
+                    total_log[j]=total_log[j+1];
+                    total_log[j+1]=tmp;
+                }
                 break;
             case 3:         /* sort by departure */
-                if(strcmp(ptr_log[j].departure, ptr_log[min].departure)<0) min=j;
+                if(strcmp(total_log[j].departure, total_log[j+1].departure)>0){
+                    flag=1;
+                    tmp=total_log[j];
+                    total_log[j]=total_log[j+1];
+                    total_log[j+1]=tmp;
+                }
                 break;
             case 4:         /* sort by arrival */
-                if(strcmp(ptr_log[j].arrival, ptr_log[min].arrival)<0) min=j;
+                if(strcmp(total_log[j].arrival, total_log[j+1].arrival)>0){
+                    flag=1;
+                    tmp=total_log[j];
+                    total_log[j]=total_log[j+1];
+                    total_log[j+1]=tmp;
+                }
                 break;
             }
-        }
-        if(min!=i){
-            tmp=ptr_log[i];
-            ptr_log[i]=ptr_log[min];
-            ptr_log[min]=tmp;
         }
     }
 }
 
-void printfunct(info_log ptr_log[MAXENTRIES], int total_entries){
+void printfunct(info_log total_log[MAXENTRIES], int total_entries){
     int i;
     char command[MAX+1], filenm[MAX+1];
     FILE *fp;
@@ -225,21 +240,20 @@ void printfunct(info_log ptr_log[MAXENTRIES], int total_entries){
 
     if(strcmp(command, "stdout")==0){           /* print on stdout */
         for(i=0 ; i<total_entries ; i++)
-            printf("%s | %s -> %s\t| %d/%d/%d\t%d:%d:%d - %d:%d:%d\t%d\n", ptr_log[i].code, ptr_log[i].departure, ptr_log[i].arrival,
-               ptr_log[i].date[0], ptr_log[i].date[1], ptr_log[i].date[2], ptr_log[i].hour_dep[0], ptr_log[i].hour_dep[1], ptr_log[i].hour_dep[2],
-               ptr_log[i].hour_arr[0], ptr_log[i].hour_arr[1], ptr_log[i].hour_arr[2], ptr_log[i].delay);
+            printf("%s | %s -> %s\t| %d/%d/%d\t%d:%d:%d - %d:%d:%d\t%d\n", total_log[i].code, total_log[i].departure, total_log[i].arrival,
+               total_log[i].date[0], total_log[i].date[1], total_log[i].date[2], total_log[i].hour_dep[0], total_log[i].hour_dep[1], total_log[i].hour_dep[2],
+               total_log[i].hour_arr[0], total_log[i].hour_arr[1], total_log[i].hour_arr[2], total_log[i].delay);
     }
     else if(strcmp(command, "file")==0){            /* print on file */
         printf("Enter filename: ");
         scanf("%s", filenm);
         fp=fopen(filenm, "w");
         for(i=0 ; i<total_entries ; i++)
-            fprintf(fp, "%s %s %s %d/%d/%d %d:%d:%d %d:%d:%d %d\n", ptr_log[i].code, ptr_log[i].departure, ptr_log[i].arrival,
-               ptr_log[i].date[0], ptr_log[i].date[1], ptr_log[i].date[2], ptr_log[i].hour_dep[0], ptr_log[i].hour_dep[1], ptr_log[i].hour_dep[2],
-               ptr_log[i].hour_arr[0], ptr_log[i].hour_arr[1], ptr_log[i].hour_arr[2], ptr_log[i].delay);
+            fprintf(fp, "%s %s %s %d/%d/%d %d:%d:%d %d:%d:%d %d\n", total_log[i].code, total_log[i].departure, total_log[i].arrival,
+               total_log[i].date[0], total_log[i].date[1], total_log[i].date[2], total_log[i].hour_dep[0], total_log[i].hour_dep[1], total_log[i].hour_dep[2],
+               total_log[i].hour_arr[0], total_log[i].hour_arr[1], total_log[i].hour_arr[2], total_log[i].delay);
         fclose(fp);
     }
     printf("\nPrint done!\n");
     printf("-------------------------\n");
 }
-
