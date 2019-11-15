@@ -82,14 +82,11 @@ int main(){
 }
 
 int fill_log(FILE *log, info_log **total_log, info_log ****ptr_sorted){
-    int i=0, j, lengthmax=0, entries=0;
+    int i=0, j, entries=0;
     char line[MAXFILE+1];
 
-    while(fgets(line, MAXFILE, log)!=NULL){
-        if(strlen(line)>lengthmax)
-            lengthmax=strlen(line);
+    while(fgets(line, MAXFILE, log)!=NULL)
         entries++;
-    }
 
     *ptr_sorted=malloc(r_capolinea*sizeof(info_log **));
     for(i=0 ; i<r_capolinea ; i++)
