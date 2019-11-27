@@ -53,7 +53,7 @@ int main(){
 void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total){
     int i;
 
-    if(pos>actualmax){
+    if(pos>actualmax){          /* terminazione */
         actualmax=pos;
         strcpy(bestsol, sol);
         return;
@@ -61,36 +61,28 @@ void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total){
 
     for(i=0 ; i<strlen(val) ; i++){
         if(val[i]=='z' && total.zaffiri>0){
-            total.zaffiri--;
-            total.tot--;
+            total.zaffiri--; total.tot--;           /* rimuovo le pietre gia' utilizzate */
             sol[pos]=val[i];
             createnecklace(pos+1, "zr", sol, bestsol, total);
-            total.zaffiri++;
-            total.tot++;
+            total.zaffiri++; total.tot++;           /* BACKTRACK */
         }
         if(val[i]=='s' && total.smeraldi>0){
-            total.smeraldi--;
-            total.tot--;
+            total.smeraldi--; total.tot--;          /* rimuovo le pietre gia' utilizzate */
             sol[pos]=val[i];
             createnecklace(pos+1, "st", sol, bestsol, total);
-            total.smeraldi++;
-            total.tot++;
+            total.smeraldi++; total.tot++;          /* BACKTRACK */
         }
         if(val[i]=='r' && total.rubini>0){
-            total.rubini--;
-            total.tot--;
+            total.rubini--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
             sol[pos]=val[i];
             createnecklace(pos+1, "st", sol, bestsol, total);
-            total.rubini++;
-            total.tot++;
+            total.rubini++; total.tot++;            /* BACKTRACK */
         }
         if(val[i]=='t' && total.topazi>0){
-            total.topazi--;
-            total.tot--;
+            total.topazi--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
             sol[pos]=val[i];
             createnecklace(pos+1, "zr", sol, bestsol, total);
-            total.topazi++;
-            total.tot++;
+            total.topazi++; total.tot++;            /* BACKTRACK */
         }
     }
 }
