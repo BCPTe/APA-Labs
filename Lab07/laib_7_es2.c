@@ -12,7 +12,7 @@ Description : Laib_7 Exercise 2 - APA 19/20 PoliTO
 N.B.:
     1) QUANDO VIENE STAMPATO IL NUMERO TOTALE DI COLLANE CREATE (riga 45) CI SI RIFERISCE A COLLANE DI LUNGHEZZA VARIABILE TRA 1 E total.tot!
        IL NUMERO DI SOLUZIONI TOTALI CHE VIENE STAMPATO NON COMPRENDE QUELLE CONTENENTI UN NUMERO DI ZAFFIRI > DEL NUMERO DI SMERALDI.
-    2) 'int consecutive' permette di evitare la consecuzione di più pietre secondo le specifiche dell'utente all'avvio del programma!
+    2) 'int consecutive' permette di evitare la consecuzione di piÃ¹ pietre secondo le specifiche dell'utente all'avvio del programma!
 */
 
 #include <stdio.h>
@@ -80,7 +80,7 @@ void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, 
                 value+=total.val_t;
         }
         if(numZaf>numSme)
-            *countersol-=1;
+            (*countersol)--;
         if(value>actualmaxvalue && numZaf<=numSme){     /* verifico che il valore sia > di quello attuale e che numZaf<numSme come da specifica*/
             actualmaxvalue=value;
             strcpy(bestsol, sol);
