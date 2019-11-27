@@ -10,7 +10,9 @@ Description : Laib_7 Exercise 2 - APA 19/20 PoliTO
 
 /*
 N.B.:
-    QUANDO VIENE STAMPATO IL NUMERO TOTALE DI COLLANE CREATE (riga 45) CI SI RIFERISCE A COLLANE DI LUNGHEZZA VARIABILE TRA 1 E total.tot!
+    1) QUANDO VIENE STAMPATO IL NUMERO TOTALE DI COLLANE CREATE (riga 45) CI SI RIFERISCE A COLLANE DI LUNGHEZZA VARIABILE TRA 1 E total.tot!
+       IL NUMERO DI SOLUZIONI TOTALI CHE VIENE STAMPATO NON COMPRENDE QUELLE CONTENENTI UN NUMERO DI ZAFFIRI > DEL NUMERO DI SMERALDI.
+    2) 'int consecutive' permette di evitare la consecuzione di più pietre secondo le specifiche dell'utente all'avvio del programma!
 */
 
 #include <stdio.h>
@@ -67,7 +69,7 @@ void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, 
     int i;
 
     if(pos>=1 && pos<=n){
-        for(i=pos-1 ; i<pos ; i++){
+        for(i=pos-1 ; i<pos ; i++){         /* calcolo l'attuale valore della soluzione */
             if(sol[i]=='z')
                 value+=total.val_z;
             else if(sol[i]=='s')
@@ -77,7 +79,9 @@ void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, 
             else if(sol[i]=='t')
                 value+=total.val_t;
         }
-        if(value>actualmaxvalue && numZaf<=numSme){
+        if(numZaf>numSme)
+            *countersol-=1;
+        if(value>actualmaxvalue && numZaf<=numSme){     /* verifico che il valore sia > di quello attuale e che numZaf<numSme come da specifica*/
             actualmaxvalue=value;
             strcpy(bestsol, sol);
         }
@@ -86,7 +90,7 @@ void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, 
     if(total.tot==0)
         return;
 
-    for(i=0 ; i<strlen(val) ; i++){
+    for(i=0 ; i<strlen(val) ; i++){                 /* INIZIO ALGORITMO RICORSIVO */
         if(val[i]=='z' && total.zaffiri>0){
             if(sol[pos-1]!='z')
                 consecutive=0;
@@ -97,7 +101,7 @@ void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, 
             sol[pos]=val[i];
             numZaf++;
             createnecklace(pos+1, "zr", sol, bestsol, total, n, consecutive, countersol);
-            total.zaffiri++; total.tot++;
+            total.zaffiri++; total.tot++;               /* BACKTRACK */
             numZaf--;
             value-=total.val_z;
             sol[pos]='\0';
@@ -112,7 +116,7 @@ void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, 
             sol[pos]=val[i];
             numSme++;
             createnecklace(pos+1, "st", sol, bestsol, total, n, consecutive, countersol);
-            total.smeraldi++; total.tot++;
+            total.smeraldi++; total.tot++;              /* BACKTRACK */
             numSme--;
             value-=total.val_s;
             sol[pos]='\0';
@@ -126,7 +130,7 @@ void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, 
             total.topazi--; total.tot--;
             sol[pos]=val[i];
             createnecklace(pos+1, "zr", sol, bestsol, total, n, consecutive, countersol);
-            total.topazi++; total.tot++;
+            total.topazi++; total.tot++;                /* BACKTRACK */
             value-=total.val_t;
             sol[pos]='\0';
         }
@@ -139,7 +143,7 @@ void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, 
             total.rubini--; total.tot--;
             sol[pos]=val[i];
             createnecklace(pos+1, "st", sol, bestsol, total, n, consecutive, countersol);
-            total.rubini++; total.tot++;
+            total.rubini++; total.tot++;                /* BACKTRACK */
             value-=total.val_r;
             sol[pos]='\0';
         }
