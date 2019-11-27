@@ -21,10 +21,10 @@ typedef struct{
     int tot;
 }stones;
 
-int createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, int count);
+void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total);
 
 int main(){
-    int i, count=0;
+    int i;
     char value[difstonesnumber+1]="zsrt";
     char *sol, *bestsol;
     stones numberstones;
@@ -35,7 +35,7 @@ int main(){
 
     sol=calloc(numberstones.tot+1, sizeof(char));
     bestsol=calloc(numberstones.tot+1, sizeof(char));
-    count=createnecklace(0, value, sol, bestsol, numberstones, count);
+    createnecklace(0, value, sol, bestsol, numberstones);
 
     printf("Total stones: %d!\n\n", numberstones.tot);
     printf("Best sol:\n");
@@ -50,13 +50,13 @@ int main(){
     return EXIT_SUCCESS;
 }
 
-int createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, int count){
+void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total){
     int i;
 
     if(pos>actualmax){
         actualmax=pos;
         strcpy(bestsol, sol);
-        return count+1;
+        return;
     }
 
     for(i=0 ; i<strlen(val) ; i++){
@@ -64,7 +64,7 @@ int createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, i
             total.zaffiri--;
             total.tot--;
             sol[pos]=val[i];
-            count=createnecklace(pos+1, "zr", sol, bestsol, total, count);
+            createnecklace(pos+1, "zr", sol, bestsol, total);
             total.zaffiri++;
             total.tot++;
         }
@@ -72,7 +72,7 @@ int createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, i
             total.smeraldi--;
             total.tot--;
             sol[pos]=val[i];
-            count=createnecklace(pos+1, "st", sol, bestsol, total, count);
+            createnecklace(pos+1, "st", sol, bestsol, total);
             total.smeraldi++;
             total.tot++;
         }
@@ -80,7 +80,7 @@ int createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, i
             total.rubini--;
             total.tot--;
             sol[pos]=val[i];
-            count=createnecklace(pos+1, "st", sol, bestsol, total, count);
+            createnecklace(pos+1, "st", sol, bestsol, total);
             total.rubini++;
             total.tot++;
         }
@@ -88,11 +88,9 @@ int createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, i
             total.topazi--;
             total.tot--;
             sol[pos]=val[i];
-            count=createnecklace(pos+1, "zr", sol, bestsol, total, count);
+            createnecklace(pos+1, "zr", sol, bestsol, total);
             total.topazi++;
             total.tot++;
         }
     }
-
-    return count;
 }
