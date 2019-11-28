@@ -76,7 +76,7 @@ void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, 
             else if(sol[i]=='T')
                 value+=total.val_t;
         }
-        if(value>actualmaxvalue && numZaf<=numSme){     /* verifico che il valore sia > di quello attuale e che numZaf<numSme come da specifica*/
+        if(value>actualmaxvalue){     /* verifico che il valore sia > di quello attuale e che numZaf<numSme come da specifica*/
             actualmaxvalue=value;
             strcpy(bestsol, sol);
         }
@@ -89,11 +89,13 @@ void createnecklace(int pos, char *val, char *sol, char *bestsol, stones total, 
             if(sol[pos-1]!='Z')
                 consecutive=0;
             consecutive++;
-            if(consecutive>total.max_rip)
+            numZaf++;
+            if(consecutive>total.max_rip || numZaf>numSme){
+                numZaf--;
                 continue;
+            }
             total.zaffiri--; total.tot--;
             sol[pos]=val[i];
-            numZaf++;
             createnecklace(pos+1, "ZR", sol, bestsol, total, consecutive);
             total.zaffiri++; total.tot++;               /* BACKTRACK */
             numZaf--;
