@@ -19,7 +19,7 @@ Description : Laib_7 Exercise 1 - APA 19/20 PoliTO
 #include <string.h>
 
 #define difstonesnumber 4
-int actualmax=1;
+int actualmax=0;
 int flag=0;
 
 typedef struct{
