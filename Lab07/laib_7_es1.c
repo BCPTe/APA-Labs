@@ -2,7 +2,7 @@
 =============================================================
 Name        : laib_7_es1.c
 Author      : BCPTe
-Version     : 1.0
+Version     : 2.0
 Copyright   : ++NONE++
 Description : Laib_7 Exercise 1 - APA 19/20 PoliTO
 =============================================================
@@ -40,7 +40,7 @@ int main(){
     numberstones.tot=measure=numberstones.zaffiri+numberstones.smeraldi+numberstones.rubini+numberstones.topazi;
 /*
     FILE *fp=fopen("test2.txt", "r");
-    while(fscanf(fp, "%d%d%d%d%d", &numberstones.zaffiri, &numberstones.rubini, &numberstones.topazi, &numberstones.smeraldi, &measure)!=EOF){
+    while(fscanf(fp, "%d%d%d%d", &numberstones.zaffiri, &numberstones.rubini, &numberstones.topazi, &numberstones.smeraldi)!=EOF){
     numberstones.tot=measure=numberstones.zaffiri+numberstones.smeraldi+numberstones.rubini+numberstones.topazi;
     flag=0; actualmax=1;
 */
@@ -70,136 +70,145 @@ void createnecklace(int pos, char *val, char *sol, char *bestsol, int k, stones 
 
     if(pos>=k){          /* terminazione */
         flag=1;
+        printf("\a");
         actualmax=pos;
         strcpy(bestsol, sol);
         return;
     }
 
     for(i=0 ; i<strlen(val) && !flag ; i++){
-        if(val[i]=='Z' && total.zaffiri==1 && total.rubini>0){
-            total.zaffiri--; total.tot--;           /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "R", sol, bestsol, k, total);
-            total.zaffiri++; total.tot++;           /* BACKTRACK */
-            if(flag)
+        if(val[i]=='Z' && total.zaffiri>=1){
+            if(total.zaffiri==1 && total.rubini>0){
+                total.zaffiri--; total.tot--;           /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "R", sol, bestsol, k, total);
+                total.zaffiri++; total.tot++;           /* BACKTRACK */
+                if(flag)
+                    return;
+            }
+            else if(total.rubini==0 && pos+total.zaffiri==k){
+                total.zaffiri--; total.tot--;           /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "Z", sol, bestsol, k, total);
+                total.zaffiri++; total.tot++;           /* BACKTRACK */
+                if(flag)
+                    return;
+            }
+            else if(total.rubini==0 && pos+total.zaffiri!=k)
                 return;
-        }
-        else if(val[i]=='Z' && total.zaffiri>1 && total.rubini==0 && pos+total.zaffiri==k){
-            total.zaffiri--; total.tot--;           /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "Z", sol, bestsol, k, total);
-            total.zaffiri++; total.tot++;           /* BACKTRACK */
-            if(flag)
-                return;
-        }
-        else if(val[i]=='Z' && total.zaffiri>1 && total.rubini>0){
-            total.zaffiri--; total.tot--;           /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "ZR", sol, bestsol, k, total);
-            total.zaffiri++; total.tot++;           /* BACKTRACK */
-            if(flag)
-                return;
-        }
-        //
-        //
-        //
-        if(val[i]=='S' && total.smeraldi==1 && total.topazi>0){
-            total.smeraldi--; total.tot--;          /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "T", sol, bestsol, k, total);
-            total.smeraldi++; total.tot++;           /* BACKTRACK */
-            if(flag)
-                return;
-        }
-        else if(val[i]=='S' && total.smeraldi>1 && total.topazi==0 && pos+total.smeraldi==k){
-            total.smeraldi--; total.tot--;           /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "S", sol, bestsol, k, total);
-            total.smeraldi++; total.tot++;           /* BACKTRACK */
-            if(flag)
-                return;
-        }
-        else if(val[i]=='S' && total.smeraldi>1 && total.topazi>0){
-            total.smeraldi--; total.tot--;           /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "ST", sol, bestsol, k, total);
-            total.smeraldi++; total.tot++;           /* BACKTRACK */
-            if(flag)
-                return;
+            else if(total.rubini>0){
+                total.zaffiri--; total.tot--;           /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "ZR", sol, bestsol, k, total);
+                total.zaffiri++; total.tot++;           /* BACKTRACK */
+                if(flag)
+                    return;
+            }
         }
         //
         //
         //
-        if(val[i]=='R' && total.rubini>0 && total.smeraldi==0 && total.topazi>0){
-            total.rubini--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "T", sol, bestsol, k, total);
-            total.rubini++; total.tot++;            /* BACKTRACK */
-            if(flag)
-                return;
+        if(val[i]=='S' && total.smeraldi>=1){
+            if(total.smeraldi==1 && total.topazi>0){
+                total.smeraldi--; total.tot--;          /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "T", sol, bestsol, k, total);
+                total.smeraldi++; total.tot++;           /* BACKTRACK */
+                if(flag)
+                    return;
+            }
+            else if(total.topazi==0 && pos+total.smeraldi==k){
+                total.smeraldi--; total.tot--;           /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "S", sol, bestsol, k, total);
+                total.smeraldi++; total.tot++;           /* BACKTRACK */
+                if(flag)
+                    return;
+            }
+            else if(total.topazi>0){
+                total.smeraldi--; total.tot--;           /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "ST", sol, bestsol, k, total);
+                total.smeraldi++; total.tot++;           /* BACKTRACK */
+                if(flag)
+                    return;
+            }
         }
-        else if(val[i]=='R' && total.rubini>0 && total.smeraldi>0 && total.topazi==0 && pos+total.smeraldi==k){
-            total.rubini--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "S", sol, bestsol, k, total);
-            total.rubini++; total.tot++;            /* BACKTRACK */
-            if(flag)
-                return;
-        }
-        else if(val[i]=='R' && total.rubini>0 && total.smeraldi>0 && total.topazi>0){
-            total.rubini--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "ST", sol, bestsol, k, total);
-            total.rubini++; total.tot++;            /* BACKTRACK */
-            if(flag)
-                return;
-        }
-        else if(val[i]=='R' && total.rubini>0 && total.smeraldi==0 && total.topazi==0 && pos==k-1){
-            total.rubini--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "", sol, bestsol, k, total);
-            total.rubini++; total.tot++;            /* BACKTRACK */
-            if(flag)
-                return;
-        }
-        else if(val[i]=='R' && total.rubini>0 && total.smeraldi==0 && total.topazi==0 && pos!=k-1)
-            return;
         //
         //
         //
-        if(val[i]=='T' && total.topazi>0 && total.zaffiri==0 && total.rubini>0){
-            total.topazi--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "R", sol, bestsol, k, total);
-            total.topazi++; total.tot++;            /*BACKTRACK */
-            if(flag)
-                return;
+        if(val[i]=='R' && total.rubini>0){
+            if(total.smeraldi==0 && total.topazi>0){
+                total.rubini--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "T", sol, bestsol, k, total);
+                total.rubini++; total.tot++;            /* BACKTRACK */
+                if(flag)
+                    return;
+            }
+            else if(total.smeraldi>0 && total.topazi==0 && pos+1+total.smeraldi==k){
+                total.rubini--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "S", sol, bestsol, k, total);
+                total.rubini++; total.tot++;            /* BACKTRACK */
+                if(flag)
+                    return;
+            }
+            else if(total.smeraldi>0 && total.topazi>0){
+                total.rubini--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "ST", sol, bestsol, k, total);
+                total.rubini++; total.tot++;            /* BACKTRACK */
+                if(flag)
+                    return;
+            }
+            else if(total.smeraldi==0 && total.topazi==0 && pos==k-1){
+                total.rubini--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "", sol, bestsol, k, total);
+                total.rubini++; total.tot++;            /* BACKTRACK */
+                if(flag)
+                    return;
+            }
         }
-        else if(val[i]=='T' && total.topazi>0 && total.zaffiri>0 && total.rubini==0 && pos+total.zaffiri==k){
-            total.topazi--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "Z", sol, bestsol, k, total);
-            total.topazi++; total.tot++;            /*BACKTRACK */
-            if(flag)
+        //
+        //
+        //
+        if(val[i]=='T' && total.topazi>0){
+            if(total.zaffiri==0 && total.rubini>0){
+                total.topazi--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "R", sol, bestsol, k, total);
+                total.topazi++; total.tot++;            /*BACKTRACK */
+                if(flag)
+                    return;
+            }
+            else if(total.zaffiri>0 && total.rubini==0 && pos+1+total.zaffiri==k){
+                total.topazi--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "Z", sol, bestsol, k, total);
+                total.topazi++; total.tot++;            /*BACKTRACK */
+                if(flag)
+                    return;
+            }
+            else if(total.zaffiri>0 && total.rubini==0 && pos+1+total.zaffiri!=k)
                 return;
+            else if(total.zaffiri>0 && total.rubini>0){
+                total.topazi--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "Z", sol, bestsol, k, total);
+                total.topazi++; total.tot++;            /*BACKTRACK */
+                if(flag)
+                    return;
+            }
+            else if(total.zaffiri==0 && total.rubini==0 && pos==k-1){
+                total.topazi--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
+                sol[pos]=val[i];
+                createnecklace(pos+1, "", sol, bestsol, k, total);
+                total.topazi++; total.tot++;            /*BACKTRACK */
+                if(flag)
+                    return;
+            }
         }
-        else if(val[i]=='T' && total.topazi>0 && total.zaffiri>0 && total.rubini>0){
-            total.topazi--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "Z", sol, bestsol, k, total);
-            total.topazi++; total.tot++;            /*BACKTRACK */
-            if(flag)
-                return;
-        }
-        else if(val[i]=='T' && total.topazi>0 && total.zaffiri==0 && total.rubini==0 && pos==k-1){
-            total.topazi--; total.tot--;            /* rimuovo le pietre gia' utilizzate */
-            sol[pos]=val[i];
-            createnecklace(pos+1, "", sol, bestsol, k, total);
-            total.topazi++; total.tot++;            /*BACKTRACK */
-            if(flag)
-                return;
-        }
-        else if(val[i]=='T' && total.topazi>0 && total.zaffiri==0 && total.rubini==0 && pos!=k-1)
-            return;
     }
 }
