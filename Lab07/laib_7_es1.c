@@ -2,7 +2,7 @@
 =============================================================
 Name        : laib_7_es1.c
 Author      : BCPTe
-Version     : 2.0
+Version     : 1.0
 Copyright   : ++NONE++
 Description : Laib_7 Exercise 1 - APA 19/20 PoliTO
 =============================================================
@@ -34,34 +34,34 @@ int main(){
     char value[difstonesnumber+1]="ZSRT";
     char *sol, *bestsol;
     stones numberstones;
-
+/*
     printf("Enter number of ZAFFIRI, SMERALDI, RUBINI, TOPAZI: ");
     scanf("%d%d%d%d", &numberstones.zaffiri, &numberstones.smeraldi, &numberstones.rubini, &numberstones.topazi);
     numberstones.tot=measure=numberstones.zaffiri+numberstones.smeraldi+numberstones.rubini+numberstones.topazi;
-/*
+*/
     FILE *fp=fopen("test2.txt", "r");
     while(fscanf(fp, "%d%d%d%d", &numberstones.zaffiri, &numberstones.rubini, &numberstones.topazi, &numberstones.smeraldi)!=EOF){
     numberstones.tot=measure=numberstones.zaffiri+numberstones.smeraldi+numberstones.rubini+numberstones.topazi;
     flag=0; actualmax=1;
-*/
+
     sol=calloc(numberstones.tot+1, sizeof(char));
     bestsol=calloc(numberstones.tot+1, sizeof(char));
     for( ; measure>0 && !flag ; measure--)
         createnecklace(0, value, sol, bestsol, measure, numberstones);
 
-    printf("Total stones: %d!\n\n", numberstones.tot);
+    printf("Total stones: %d!\n", numberstones.tot);
     printf("Best sol:\n");
-    printf("---------------------------------------\n");
+    printf("------------------------------------------------------------------------------\n");
     for(i=0 ; i<actualmax-1 ; i++)
         printf("%c-", bestsol[i]);
     printf("%c\n", bestsol[i]);
-    printf("---------------------------------------\n");
+    printf("------------------------------------------------------------------------------\n");
     printf("LENGTH: %d!\n", actualmax);
-    printf("------------\n");
+    printf("------------\n\n");
 
     free(sol);
     free(bestsol);
-//    }
+    }
     return EXIT_SUCCESS;
 }
 
