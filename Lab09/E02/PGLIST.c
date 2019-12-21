@@ -35,9 +35,7 @@ ptr_pgList addPgCMD(FILE *fp, ptr_pgList infolist){             /* funzione di a
 
     if(fp==stdin)
         printf("Enter info of the new character(s) and press CTRL+Z (<code><name><class><hp><mp><atk><def><mag><spr>):\n");
-    while(fscanf(fp, "%s %s %s %d %d %d %d %d %d", tmp.code, tmp.name, tmp.clas,
-                            &tmp.statPg.hp, &tmp.statPg.mp, &tmp.statPg.atk,
-                            &tmp.statPg.def, &tmp.statPg.mag, &tmp.statPg.spr)!=EOF)
+    while(addPg(fp, &tmp)!=EXIT_FAILURE)
         infolist->head=insInTail(infolist->head, tmp);
     return infolist;
 }

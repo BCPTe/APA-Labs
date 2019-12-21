@@ -6,8 +6,11 @@
 #include "EQUIPARRAY.h"
 
 int addPg(FILE *fp, pg_t *ptr){
-    int check1=fscanf(fp, "%s %s %s", ptr->code, ptr->name, ptr->clas);
-    int check2=readStat(fp, &(ptr->statPg));
+    int check1, check2;
+
+    check1=fscanf(fp, "%s %s %s", ptr->code, ptr->name, ptr->clas);
+    if(check1!=EOF)
+        check2=readStat(fp, &(ptr->statPg));
     ptr->eqStat=ptr->statPg;
     return ((check1==EOF || check2==EOF) ? EXIT_FAILURE : EXIT_SUCCESS);
 }

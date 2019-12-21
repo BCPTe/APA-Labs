@@ -3,7 +3,7 @@
 #include "INV.h"
 
 int readStat(FILE *fp, stat_t *ptr){
-    return fscanf(fp, "%d %d %d %d %d %d\n", &(ptr->hp), &(ptr->mp), &(ptr->atk), &(ptr->def), &(ptr->mag), &(ptr->spr));
+    return fscanf(fp, "%d %d %d %d %d %d", &(ptr->hp), &(ptr->mp), &(ptr->atk), &(ptr->def), &(ptr->mag), &(ptr->spr));
 }
 
 int addObj(FILE *fp, inv_t *ptr){
