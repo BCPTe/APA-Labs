@@ -15,7 +15,7 @@ struct nodoPg_t{
     link next;
 };
 
-ptr_pgList listIniz(){
+ptr_pgList listIniz(){                          /* inizializzazione della lista personaggi */
     pg_t tmp;
     FILE *fp=fopen(filename_pg, "r");
     ptr_pgList x=malloc(sizeof *x);
@@ -30,7 +30,7 @@ ptr_pgList listIniz(){
     return x;
 }
 
-ptr_pgList addPgCMD(FILE *fp, ptr_pgList infolist){
+ptr_pgList addPgCMD(FILE *fp, ptr_pgList infolist){             /* funzione di aggiunta personaggio */
     pg_t tmp;
 
     if(fp==stdin)
@@ -42,7 +42,7 @@ ptr_pgList addPgCMD(FILE *fp, ptr_pgList infolist){
     return infolist;
 }
 
-ptr_pgList removePgCMD(FILE *fp, ptr_pgList infolist){
+ptr_pgList removePgCMD(FILE *fp, ptr_pgList infolist){      /* funzione di rimozione personaggio */
     int found=0, headcheck=0;
     link p, x;
     char code[7];
@@ -76,7 +76,7 @@ ptr_pgList removePgCMD(FILE *fp, ptr_pgList infolist){
     return infolist;
 }
 
-pg_t *searchPgCMD(ptr_pgList infolist, char *code){
+pg_t *searchPgCMD(ptr_pgList infolist, char *code){             /* funzione di ricerca ritornante un puntatore non nullo se trovato */
     link x;
 
     for(x=infolist->head ; x!=NULL ; x=x->next){
@@ -109,11 +109,13 @@ link insInTail(link h, pg_t val){
     return h;
 }
 
-void stampaPg(ptr_pgList infolist, ptr_invArray inventario){
+void stampaPg(ptr_pgList infolist, ptr_invArray inventario){        /* funzione di stampa di tutti i personaggi */
     int i;
     inv_t tmp;
     link x;
 
+    printf("---------------\n");
+    printf("| PERSONAGGI: |\n");
     printf("---------------------------------------------------------------------------------------------------------\n");
     printf("| %-7s  %-15s%-15s\t|\tHP\tMP\tATK\tDEF\tMAG\tSPR\t|\n", "CODE", "NAME", "CLASS");
     printf("---------------------------------------------------------------------------------------------------------\n");

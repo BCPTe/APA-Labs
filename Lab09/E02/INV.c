@@ -13,7 +13,7 @@ int addObj(FILE *fp, inv_t *ptr){
 }
 
 void printObj(FILE *fp, inv_t *ptr, int index){
-    fprintf(fp, "| EQ%03d\t%-20s%-20s|", index, ptr->nameObj, ptr->clasObj);
+    fprintf(fp, "| EQ%03d\t%-20s%-20s|", index+1, ptr->nameObj, ptr->clasObj);
     printStatObj(fp, &ptr->statObj);
 }
 

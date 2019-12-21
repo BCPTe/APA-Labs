@@ -21,8 +21,8 @@ void printStatPg(FILE *fp, stat_t *ptr){
     fprintf(fp, "\t%d\t%d\t%d\t%d\t%d\t%d\t|\n", ptr->hp, ptr->mp, ptr->atk, ptr->def, ptr->mag, ptr->spr);
 }
 
-void editEquipCMD(pg_t *searchedPg, ptr_invArray inventario){
-    int i, index, check;
+void editEquipCMD(pg_t *searchedPg, ptr_invArray inventario){               /*funzione di modifica equip -- si appoggia ad */
+    int i, index, check;                                            /* altre funzioni poiche' lavora con dati non di sua proprieta' */
     stat_t tmp;
     char name[7];
     inv_t *searchedObj;
@@ -33,11 +33,11 @@ void editEquipCMD(pg_t *searchedPg, ptr_invArray inventario){
     printf("-----------------------------------------------------------------------------------------------------\n\n");
     printf("Enter NAME of the object to add/remove: ");
     scanf("%s", name);
-    searchedObj=searchObjCMD(inventario, name);
+    searchedObj=searchObjCMD(inventario, name);         /* ritorna il puntatore all'oggetto cercato per vedere se esiste */
     if(searchedObj!=NULL){
-        index=getIndex(inventario, name);
-        if(index!=-1){
-            check=updateEquip(searchedPg->actualEquip, index);
+        index=getIndex(inventario, name);                        /* acquisisce l'indice dell'oggetto cercato */
+        if(index!=-1){                                           /* se l'indice e' valido prosegue */
+            check=updateEquip(searchedPg->actualEquip, index);          /* funzione che effettua l'equipaggiamento */
             if(check==10 || check==11){
                 searchedPg->eqStat.hp=searchedPg->statPg.hp;
                 searchedPg->eqStat.mp=searchedPg->statPg.mp;
@@ -46,8 +46,8 @@ void editEquipCMD(pg_t *searchedPg, ptr_invArray inventario){
                 searchedPg->eqStat.mag=searchedPg->statPg.mag;
                 searchedPg->eqStat.spr=searchedPg->statPg.spr;
                 for(i=0 ; i<getInUso(searchedPg->actualEquip) ; i++){
-                    tmp=getStat_index(inventario, getIndexArray(searchedPg->actualEquip, i));
-                    searchedPg->eqStat.hp+=tmp.hp;
+                    tmp=getStat_index(inventario, getIndexArray(searchedPg->actualEquip, i));       /* funzione che prende le statistiche di */
+                    searchedPg->eqStat.hp+=tmp.hp;                                              /* ogni oggetto equipaggiato per calcolare quella totale attuale */
                     searchedPg->eqStat.mp+=tmp.mp;
                     searchedPg->eqStat.atk+=tmp.atk;
                     searchedPg->eqStat.def+=tmp.def;

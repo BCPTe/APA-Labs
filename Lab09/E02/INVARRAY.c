@@ -9,7 +9,7 @@ struct invArray_s{
     int nObj, maxObj;
 };
 
-ptr_invArray invIniz(){
+ptr_invArray invIniz(){                         /* inizializzazione array inventario */
     ptr_invArray ptr=malloc(sizeof *ptr);
     FILE *fp=fopen(filename_inv, "r");
 
@@ -23,7 +23,7 @@ ptr_invArray invIniz(){
     return ptr;
 }
 
-inv_t *searchObjCMD(ptr_invArray ptr, char *name){
+inv_t *searchObjCMD(ptr_invArray ptr, char *name){          /* funzione di ricerca oggetto con ritorno di pointer non nullo se presente */
     int i;
 
     for(i=0 ; i<ptr->nObj ; i++){
@@ -34,7 +34,7 @@ inv_t *searchObjCMD(ptr_invArray ptr, char *name){
     return NULL;
 }
 
-int getIndex(ptr_invArray inventario, char *name){
+int getIndex(ptr_invArray inventario, char *name){          /* ritorna l'indice dell'oggetto nell'inventario oppure un indice non valido */
     int i;
 
     for(i=0 ; i<inventario->nObj ; i++){
@@ -45,8 +45,8 @@ int getIndex(ptr_invArray inventario, char *name){
     return -1;
 }
 
-stat_t getStat_index(ptr_invArray inventario, int index){
-    stat_t tmp={0};
+stat_t getStat_index(ptr_invArray inventario, int index){           /* ritorna un puntatore a dato di tipo stat_t che poi verra' usato */
+    stat_t tmp={0};                                               /* per calcolare le statistiche di un personaggio con equipaggiamento */
 
     if(index!=-1)
         return inventario->objArray[index].statObj;
@@ -57,7 +57,9 @@ inv_t getInv(ptr_invArray inventario, int index){
     return inventario->objArray[index];
 }
 
-void stampaInv(ptr_invArray ptr){
+void stampaInv(ptr_invArray ptr){               /* stampa di tutto l'inventario */
+    printf("---------------\n");
+    printf("| INVENTARIO: |\n");
     printf("---------------------------------------------------------------------------------------------------------\n");
     printf("| %-5s\t%-20s%-20s|\tHP\tMP\tATK\tDEF\tMAG\tSPR\t|\n", "ID", "NAME", "CLASS");
     printf("---------------------------------------------------------------------------------------------------------\n");

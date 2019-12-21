@@ -8,14 +8,14 @@ struct equipArray_s{
     int vettEq[MAXEQUIP];
 };
 
-ptr_equipArray equipIniz(){
+ptr_equipArray equipIniz(){                         /* inizializzazione dell'array */
     ptr_equipArray tmp=malloc(sizeof *tmp);
     tmp->inUso=0;
     return tmp;
 }
 
-int updateEquip(ptr_equipArray actual, int index){
-    int remove=0;
+int updateEquip(ptr_equipArray actual, int index){              /* funzione che modifica l'array di equipaggiamento */
+    int remove=0;                                       /* possible return values: 11->removed -- 10->added -- 23->max reached */
 
     if(actual->inUso<MAXEQUIP){
         for(int i=0 ; i<actual->inUso ; i++){
@@ -32,15 +32,15 @@ int updateEquip(ptr_equipArray actual, int index){
             return 10;
         }
     }
-    else return 23;
 
+    return 23;
 }
 
-int getInUso(ptr_equipArray actual){
+int getInUso(ptr_equipArray actual){            /* funzione che ritorna il numero di equipaggiamenti totali attuali */
     return actual->inUso;
 }
 
-int getIndexArray(ptr_equipArray actual, int index){
+int getIndexArray(ptr_equipArray actual, int index){            /* funzione che ritorna l'index dell'oggetto nell'inventario */
     return actual->vettEq[index];
 }
 
