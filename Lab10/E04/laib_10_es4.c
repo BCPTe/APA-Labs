@@ -56,6 +56,8 @@ int main(){
                 printf("Invalid command!\n");
         }
     }while(cmd!=0);
-
+    
+    GRAPHfree(grafo);
+    
     return EXIT_SUCCESS;
 }
