@@ -4,6 +4,7 @@
 #include "GRAPH.h"
 #include "ST.h"
 
+typedef struct node *link;
 struct node{
     int v; //vertice
     int wt; //peso arco
