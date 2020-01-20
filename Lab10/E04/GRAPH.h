@@ -8,7 +8,6 @@
 #endif // MAXC
 
 typedef struct graph_s *graph_ptr;
-typedef struct node *link;
 
 typedef struct{
     int v; //vertice partenza
