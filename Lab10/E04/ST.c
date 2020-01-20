@@ -15,7 +15,7 @@ struct symboltable{
 };
 
 ST STinit(int maxN){
-    ST st=malloc(sizeof(ST));
+    ST st=malloc(sizeof *st);
 
     st->a=malloc(maxN*sizeof(Item));
     for(int i=0 ; i<maxN ; i++){
