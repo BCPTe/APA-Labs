@@ -17,14 +17,14 @@ int main(){
     char vertexToCheck[3][MAXC+1];
     graph_ptr grafo=GRAPHload();
 
-    printf("\tMENU'\n");
-    printf("1) STAMPA IN ORDINE ALFABETICO\n");
-    printf("2) STAMPA MATRICE DI ADIACENZA\n");
-    printf("3) GENERA/STAMPA LISTA DI ADIACENZA\n");
-    printf("4) VERIFICA SOTTOGRAFO COMPLETO\n");
-    printf("0) ESCI\n\n");
-
     do{
+        printf("\tMENU'\n");
+        printf("1) STAMPA IN ORDINE ALFABETICO\n");
+        printf("2) STAMPA MATRICE DI ADIACENZA\n");
+        printf("3) GENERA/STAMPA LISTA DI ADIACENZA\n");
+        printf("4) VERIFICA SOTTOGRAFO COMPLETO\n");
+        printf("0) ESCI\n\n");
+
         printf("Enter command: ");
         scanf("%d", &cmd);
 
